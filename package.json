@@ -1,0 +1,13 @@
+{
+  "name": "shannon-fano-encoding",
+  "version": "1.0.0",
+  "description": "shannon encoding",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "David A <daveankin@gmail.com>",
+  "license": "GPL-3.0-or-later"
+}
