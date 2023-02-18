@@ -36,9 +36,40 @@ describe('basic functionality', function basics() {
        consectetur deserunt mollit ad.`,
     ].forEach(function rtSpecific(input) {
       let preview = input.length > 10 ? (input.slice(0, 10) + '...') : input;
-      it('round trip: gets same answer for: ' + preview, function rtTest() {
-        expect(input).toBe(decode(encode(input), codesMap(input)));
+      it(`should decode same value after encoding: '${preview}'`, () => {
+        expect(decode(encode(input), codesMap(input))).toBe(input);
      });
+    });
+  });
+
+  describe('individual functions', () => {
+    it('should correctly determine codes/codesMap', function codesMapTest() {
+      expect(Object.fromEntries(codesMap('abcde')))
+        .toEqual({ a: '00', b: '01', c: '10', d: '110', e: '111' });
+      expect(codes('abcde'))
+        .toEqual({ a: '00', b: '01', c: '10', d: '110', e: '111' });
+      expect(codes('codes/codesMap'))
+        .toEqual({ c: '00', o: '01', d: '10', e: '110', s: '1110',
+          '/': '11110', M: '111110', a: '1111110', p: '1111111' });
+    });
+
+    it('should correctly encode', function encodeTest() {
+      expect(encode('abcde')).toBe('000110110111');
+      expect(encode('def')).toBe('000110');
+    });
+
+    it('should correctly decode', function decodeTest() {
+      expect(decode('000110110111',
+          { a: '00', b: '01', c: '10', d: '110', e: '111' }))
+        .toBe('abcde');
+      expect(decode('000110',
+          { d: '00', e: '01', f: '10' }))
+        .toBe('def');
+    });
+
+    it('should correctly determine length', function lengthTest() {
+      expect(length('abcde')).toBe('000110110111'.length);
+      expect(length('def')).toBe('000110'.length);
     });
   });
 });
