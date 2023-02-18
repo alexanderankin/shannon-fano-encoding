@@ -1,6 +1,6 @@
 {
   "name": "shannon-fano-encoding",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "shannon encoding",
   "main": "index.js",
   "type": "module",
