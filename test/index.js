@@ -7,8 +7,8 @@ import {
   _shannonValuesOfKeys,
 } from '../index.js'
 
-describe('basic functionality', function basics() {
-  describe('round trip', function rtBlock() {
+describe('basic functionality:', function basics() {
+  describe('round trip:', function rtBlock() {
     [
       'a',
       'ab',
@@ -43,7 +43,7 @@ describe('basic functionality', function basics() {
     });
   });
 
-  describe('individual functions', () => {
+  describe('individual functions:', () => {
     it('should correctly determine codes/codesMap', function codesMapTest() {
       expect(Object.fromEntries(codesMap('abcde')))
         .toEqual({ a: '00', b: '01', c: '10', d: '110', e: '111' });
@@ -52,6 +52,10 @@ describe('basic functionality', function basics() {
       expect(codes('codes/codesMap'))
         .toEqual({ c: '00', o: '01', d: '10', e: '110', s: '1110',
           '/': '11110', M: '111110', a: '1111110', p: '1111111' });
+      expect(codes('abbcccddddeeeeeffffff'))
+        .toEqual({ f: '00', e: '01', d: '10', c: '110', a: '1111', b: '1110', });
+      expect(codes('aaaaaabbbbbccccdddeef'))
+        .toEqual({ a: '00', b: '01', c: '10', d: '110', f: '1111', e: '1110', });
     });
 
     it('should correctly encode', function encodeTest() {

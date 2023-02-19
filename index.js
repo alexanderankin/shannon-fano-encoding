@@ -1,8 +1,6 @@
 export function codesMap(input) {
-  let length = input.length;
   let frequencies = frequenciesOfCharactersInString(input);
-  let probabilities = frequenciesToProbabilities(frequencies, length);
-  let sortedKeys = Array.from(frequencies.keys()).sort((a, b) => a - b);
+  let sortedKeys = Array.from(frequencies.entries()).sort((a, b) => b[1] - a[1]).map(e => e[0]);
   return shannonValuesOfKeys(sortedKeys);
 }
 
