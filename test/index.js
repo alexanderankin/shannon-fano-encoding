@@ -4,6 +4,7 @@ import {
   encode,
   length,
   decode,
+  _shannonValuesOfKeys,
 } from '../index.js'
 
 describe('basic functionality', function basics() {
@@ -71,5 +72,13 @@ describe('basic functionality', function basics() {
       expect(length('abcde')).toBe('000110110111'.length);
       expect(length('def')).toBe('000110'.length);
     });
+
+    it('should correctly determine _shannonValuesOfKeys', function shannonValuesTest() {
+      expect(Object.fromEntries(_shannonValuesOfKeys('abcde')))
+        .toEqual({ a: '00', b: '01', c: '10', e: '111', d: '110' })
+      expect(Object.fromEntries(_shannonValuesOfKeys('abcdefghij')))
+        .toEqual({ a: '00', b: '01', c: '10', d: '110', e: '1110',
+          f: '11110', g: '111110', h: '1111110', j: '11111111', i: '11111110' })
+    })
   });
 });

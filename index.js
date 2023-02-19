@@ -29,19 +29,31 @@ function frequenciesToProbabilities(frequencies, length) {
 }
 
 function shannonValuesOfKeys(keys) {
-  return new Map(shannonValuesHelper(keys.slice(0, 2), '0')
-    .concat(shannonValuesHelper(keys.slice(2), '1')))
+  const result = new Map();
+  let pointer = 0;
+
+  if (keys.length >= 1) result.set(keys[pointer++], '00');
+  if (keys.length >= 2) result.set(keys[pointer++], '01');
+  else return result;
+
+  let prefix = '1'
+
+  let remaining;
+  while ((remaining = (keys.length - pointer)) > 0) {
+    switch (remaining) {
+    case 2: result.set(keys[pointer + 1], prefix + '1')
+    case 1: result.set(keys[pointer], prefix + '0')
+    case 0: return result;
+    }
+
+    result.set(keys[pointer++], prefix + '0');
+    prefix += '1'
+  }
+
+  return result;
 }
 
-function shannonValuesHelper(keys, prefix) {
-  if (keys.length === 0) return []
-
-  let left = [keys[0], prefix + '0']
-  if (keys.length === 1) return [left];
-  if (keys.length === 2) return [left, [keys[1], prefix + '1']];
-
-  return [left, ...shannonValuesHelper(keys.slice(1), prefix + '1')]
-}
+export { shannonValuesOfKeys as _shannonValuesOfKeys }
 
 function encodeStringWithShannonValues(input, shannonValues) {
   return input.split('').map(char => shannonValues.get(char)).join('');
